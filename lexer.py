@@ -1,28 +1,34 @@
+# COMP 340 HW5
+# Ying Lu
 import re
-# result = re.split(r'(\t)', "1+3")
-
-
+import parser
 def tokenize(srcCode):
-    srclist = {}
-    char = re.split(r'([+\-*/])', srcCode)
+    srclist = []
 
-    for c in char:
-       # print(c)
-        if re.match(r'^[+-]?[0-9]+$', c):
-            srclist[c] = "num"
-       
-        if c == '+':
-            srclist[c] = "plus"
-        elif c =='-':
-            srclist[c] = "minus"
-        elif c == '*':
-            srclist[c] = "multiply"
-        elif c =='/':
-            srclist[c] = "divide"
-    return srclist
+    for i in range(len(srcCode)):
+        value_type = None
+        if re.search(r"[0-9]", srcCode[i]):
+            if i > 0 and (re.search(r"[0-9]", srcCode[i-1])):
+                srclist[-1][1] += srcCode[i]
+               # print(srclist[-1][1])
+                continue
+            else:
+                value_type = "NUMBER"
+        elif srcCode[i] == "+":
+            value_type = "PLUS"
+        elif srcCode[i] == "-":
+            value_type = "MINUS"
+        elif srcCode[i] == "*":
+            value_type = "MULTIPLICATION"
+        elif srcCode[i] == "/":
+            value_type = "DIVISION"
+        elif srcCode[i] == "(":
+            value_type = "LPAREN"
+        elif srcCode[i] == ")":
+            value_type = "RPAREN"
 
-
-print(tokenize("13+33"))
-print(tokenize("1003-33"))
-print(tokenize("666*566"))
-print(tokenize("66/566"))
+        if value_type:
+            srclist.append([value_type, srcCode[i]])
+    
+    parser.parseExpr(srclist)
+  
