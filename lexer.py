@@ -29,6 +29,6 @@ def tokenize(srcCode):
 
         if value_type:
             srclist.append([value_type, srcCode[i]])
-    
+    #print(srclist)
     parser.parseExpr(srclist)
   
