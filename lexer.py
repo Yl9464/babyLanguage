@@ -1,19 +1,25 @@
 # COMP 340 HW5
 # Ying Lu
 import re
-import parser
+import parserEx
+
+
 def tokenize(srcCode):
     srclist = []
 
     for i in range(len(srcCode)):
+        if srcCode[i].isspace():
+            continue
+
         value_type = None
+
         if re.search(r"[0-9]", srcCode[i]):
-            if i > 0 and (re.search(r"[0-9]", srcCode[i-1])):
+            if i > 0 and re.search(r"[0-9]", srcCode[i-1]):
                 srclist[-1][1] += srcCode[i]
-               # print(srclist[-1][1])
                 continue
             else:
                 value_type = "NUMBER"
+
         elif srcCode[i] == "+":
             value_type = "PLUS"
         elif srcCode[i] == "-":
@@ -28,7 +34,6 @@ def tokenize(srcCode):
             value_type = "RPAREN"
 
         if value_type:
-            srclist.append([value_type, srcCode[i]])
-    #print(srclist)
-    parser.parseExpr(srclist)
-  
+            srclist.append([srcCode[i], value_type])
+
+    return srclist

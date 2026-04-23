@@ -1,14 +1,10 @@
-# COMP 340 HW5
-# Ying Lu
+from parserEx import ParserEx
+from lexer import tokenize
+from printTree import printTree
 
-import lexer
-import parser
+srcCode = "1 + 3 * 4"
+srcList = tokenize(srcCode)
+rootNode = ParserEx(srcList)
 
-# srcCode = "((12+3*5)+5/4)"
-# tokSeq = lexer.tokenize(srcCode)
-
-pract = "1+3*4"
-tokSeq2 = lexer.tokenize(pract)
-
-
-
+printTree(rootNode) 
+print()
