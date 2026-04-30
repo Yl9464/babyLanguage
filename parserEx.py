@@ -4,16 +4,35 @@ class TreeNode:
         self.token = srcToken[1]
         self.left = None
         self.right = None
-
-
-def parserEx(srclist):
-    if len(srclist) == 1:
-        return TreeNode(srclist[0])
-
-    leftTree = TreeNode(srclist[0])
-    op = TreeNode(srclist[1])
-    rightTree = parserEx(srclist[2:])  # recursion
-
-    op.left = leftTree
-    op.right = rightTree
-    return op
+        
+# precedenceDict = {
+#     '+': 1,
+#     '-': 1,
+#     '*': 2,
+#     '/': 2
+# }
+def getPrecedence(srcToken):
+    if srcToken in ("PLUS", "MINUS"):
+        return 1
+    elif srcToken in ("MULTIPLICATION", "DIVISION"):
+        return 2
+    else:
+        return 0
+    
+def parserEx(precedence, srcList):
+    
+    if len(srcList) == 1:
+        leftTree = TreeNode(srcList[0])
+        op = TreeNode(srcList[1])
+        curPrecedence = getPrecedence(srcList[1][1])
+       #print("currentPrecedence: ", curPrecedence)
+        
+        if precedence < curPrecedence:
+            op.left = leftTree
+            op.right = parserEx(precedence, srcList[2:])
+            return op
+        else:        
+            return leftTree
+    else:
+        return TreeNode(srcList[0])
+    

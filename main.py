@@ -13,7 +13,7 @@ def printTree(treeRoot):
     
 srcCode = "1 * (2 + 5)"
 tokSeq = lexer.tokenize(srcCode)
-rootNode = parserEx.parserEx(tokSeq)
+rootNode = parserEx.parserEx(0, tokSeq)
 printTree(rootNode) #implementation of this function shown below
 print()
 
