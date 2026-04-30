@@ -1,10 +1,20 @@
-from parserEx import ParserEx
-from lexer import tokenize
-from printTree import printTree
+import lexer
+import parserEx
 
-srcCode = "1 + 3 * 4"
-srcList = tokenize(srcCode)
-rootNode = ParserEx(srcList)
-
-printTree(rootNode) 
+def printTree(treeRoot):
+  if treeRoot.token == "NUMBER":
+    print(treeRoot.value,end="")
+  else:
+    print("(",end="")
+    printTree(treeRoot.left)
+    print(treeRoot.value,end="")
+    printTree(treeRoot.right)
+    print(")",end="")
+    
+srcCode = "1 * (2 + 5)"
+tokSeq = lexer.tokenize(srcCode)
+rootNode = parserEx.parserEx(tokSeq)
+printTree(rootNode) #implementation of this function shown below
 print()
+
+

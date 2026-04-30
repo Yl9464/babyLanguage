@@ -6,13 +6,13 @@ class TreeNode:
         self.right = None
 
 
-def ParserEx(srclist):
+def parserEx(srclist):
     if len(srclist) == 1:
         return TreeNode(srclist[0])
 
     leftTree = TreeNode(srclist[0])
     op = TreeNode(srclist[1])
-    rightTree = ParserEx(srclist[2:])  # recursion
+    rightTree = parserEx(srclist[2:])  # recursion
 
     op.left = leftTree
     op.right = rightTree
