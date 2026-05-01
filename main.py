@@ -13,10 +13,21 @@ def printTree(treeRoot):
         print(")", end="")
 
 
-srcCode = "1 * (2 + 5)"
-#srcCode = "45"
+srcCode = "24+25"
 tokSeq = lexer.tokenize(srcCode)
 rootNode = parserEx.parserEx(0, tokSeq)
-  # for debugging
 #printTree(rootNode)  # implementation of this function shown below
+#print()
+#Failed 
+#  "23 * ((1+5) * 33)"
+# "24"
+# "125"
+# "-5"
+# "--5"
+# "(-5)"
 
+
+#Passed:
+# "(1+2)*5+4"
+#"1 * (2 + 5)"
+#"1+2*5+15"

@@ -6,31 +6,31 @@ import parserEx
 
 def tokenize(srcCode):
     srclist = []
-
-    for i in range(len(srcCode)):
+    i = 0
+    while i < len(srcCode):
         if srcCode[i].isspace():
+            i += 1
             continue
 
-        value_type = None
-
-        if re.search(r"[0-9]", srcCode[i]):
-            srclist.append([srcCode[i], "NUMBER"])
+        if srcCode[i].isdigit():
+            num = ""
+            while i < len(srcCode) and srcCode[i].isdigit():
+                num += srcCode[i]
+                i += 1
+            srclist.append([num, "NUMBER"])
             continue
-    
         elif srcCode[i] == "+":
-            value_type = "PLUS"
+            srclist.append([srcCode[i], "PLUS"])
         elif srcCode[i] == "-":
-            value_type = "MINUS"
+            srclist.append([srcCode[i], "MINUS"])
         elif srcCode[i] == "*":
-            value_type = "MULTIPLICATION"
+            srclist.append([srcCode[i], "MULTIPLICATION"])
         elif srcCode[i] == "/":
-            value_type = "DIVISION"
+            srclist.append([srcCode[i], "DIVISION"])
         elif srcCode[i] == "(":
-            value_type = "LPAREN"
+            srclist.append([srcCode[i], "LPAREN"])
         elif srcCode[i] == ")":
-            value_type = "RPAREN"
-
-        if value_type:
-            srclist.append([srcCode[i], value_type])
-    
+            srclist.append([srcCode[i], "RPAREN"])
+        i+=1
     return srclist
+   
