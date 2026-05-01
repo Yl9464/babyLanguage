@@ -1,14 +1,22 @@
 import lexer
 import parserEx
-import evaluator
 
-srcCode = "2 + 3 * 4"
+
+def printTree(treeRoot):
+    if treeRoot.token == "NUMBER":
+        print(treeRoot.value, end="")
+    else:
+        print("(", end="")
+        printTree(treeRoot.left)
+        print(treeRoot.value, end="")
+        printTree(treeRoot.right)
+        print(")", end="")
+
+
+srcCode = "1 * (2 + 5)"
+#srcCode = "45"
 tokSeq = lexer.tokenize(srcCode)
 rootNode = parserEx.parserEx(0, tokSeq)
-result = evaluator.evaluate(rootNode)
-
-parserEx.printTree(rootNode) #implementation of this function shown below
-print()
-
-print("Resuult: ", result)
+  # for debugging
+#printTree(rootNode)  # implementation of this function shown below
 

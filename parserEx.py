@@ -5,26 +5,32 @@ class TreeNode:
         self.left = None
         self.right = None
         
-
-    
-def parserEx(precedence, srcList):
-    
-    if len(srcList) == 1:
-        return TreeNode(srcList[0])
+def getPrecedence(op):
+    if op in ["PLUS", "MINUS"]:
+        return 1
+    elif op in ["MULTIPLICATION", "DIVISION"]:
+        return 2
     else:
-        leftTree = TreeNode(srcList[0])
-        op = TreeNode(srcList[1])
-        op.left = leftTree
-        op.right = parserEx(precedence, srcList[2:])
-        return op 
+        return 0
 
-def printTree(treeRoot):
-  if treeRoot.token == "NUMBER":
-    print(treeRoot.value,end="")
-  else:
-    print("(",end="")
-    printTree(treeRoot.left)
-    print(treeRoot.value,end="")
-    printTree(treeRoot.right)
-    print(")",end="")
-    
+def parserEx(precedence, srcList):
+    for i in range(len(srcList)):
+        while len(srcList) > 1:
+            nodes = TreeNode(srcList[i])
+            print("nodes: ", nodes.value, nodes.token)
+           
+           #print("[1] ", srcList[1])
+           #print("[2:] ",srcList[2:])
+            break
+     
+            
+    # while len(srcList) > 1:
+    #     leftTree = TreeNode(srcList[0])
+    #     print("leftTree: ", leftTree)
+    #     op = TreeNode(srcList[1])
+    #     print("op: ", op)
+    #     curPrecedence = getPrecedence(op.token)
+    #     print("curPrecedence: ", curPrecedence)
+    # else:
+        
+  

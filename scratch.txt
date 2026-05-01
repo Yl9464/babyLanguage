@@ -1,0 +1,39 @@
+
+
+def parserEx(precedence, srcList):
+#     if srcList[0][1] == "LPAREN":
+#         leftTree, srcList = parserEx(0, srcList[1:])
+#         srcList = srcList[1:]
+#     elif srcList[0][1] == "MINUS":
+#         rightTree, srcList = parserEx(2, srcList[1:])
+#         leftTree = TreeNode(["0", "NUMBER"])
+#         op = TreeNode(["-", "MINUS"])
+#         op.left = leftTree
+#         op.right = rightTree
+#         leftTree = op
+#     else:
+#         leftTree = TreeNode(srcList[0])
+#         if len(srcList) > 0 and srcList[0][1] == "RPAREN":
+#             srcList = srcList[1:]
+
+#     while len(srcList) > 0:
+#         if len(srcList) == 0:
+#             break
+#         if srcList[0][1] == "RPAREN":
+#             break
+
+#         curPrecedence = getPrecedence(srcList[0][1])
+
+#         if curPrecedence <= precedence:
+#             break
+
+#         op = TreeNode(srcList[0])
+#         if len(srcList) < 2:
+#             break
+#         rightTree, srcList = parserEx(curPrecedence, srcList[1:])
+
+#         op.left = leftTree
+#         op.right = rightTree
+#         leftTree = op
+
+#     return leftTree, srcList

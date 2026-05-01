@@ -1,15 +1,15 @@
 def evaluate(TreeRoot):
     if TreeRoot.token == "NUMBER":
         return int(TreeRoot.value)
+
     leftVal = evaluate(TreeRoot.left)
     rightVal = evaluate(TreeRoot.right)
-    
-    if TreeRoot.value == "PLUS":
+
+    if TreeRoot.token == "PLUS":
         return leftVal + rightVal
-    elif TreeRoot.value == "MINUS":   
+    elif TreeRoot.token == "MINUS":
         return leftVal - rightVal
-    elif TreeRoot.value == "TIMES":
+    elif TreeRoot.token == "MULTIPLICATION":
         return leftVal * rightVal
-    elif TreeRoot.value == "DIVIDE":
+    elif TreeRoot.token == "DIVIDE":
         return leftVal / rightVal
-    
