@@ -31,4 +31,3 @@ for case in testCases:
     rootNode, _ = parserEx.parserEx(0, tokSeq)
     printTree(rootNode)  # implementation of this function shown below
     print()
-

@@ -27,7 +27,7 @@ def parserEx(precedence, srcList):
     elif leftTree[1] == "MINUS":
         rightTree, srcList = parserEx(2, srcList[1:])
 
-        #negative number
+        # negative number
         negative = TreeNode(["0", "NUMBER"])
         op = TreeNode(["-", "MINUS"])
 
@@ -40,19 +40,18 @@ def parserEx(precedence, srcList):
         leftTree = TreeNode(leftTree)
         srcList = srcList[1:]
 
-    while srcList:
-        if srcList[0][1] == "RPAREN":
-            break
+    while len(srcList) > 0:
+        if len(srcList) > 1: 
+            if srcList[0][1] == "RPAREN":
+                break
 
         left = srcList[0]
         curPrecedence = getPrecedence(left[1])
 
         if precedence >= curPrecedence:
             break
-
         op = TreeNode(left)
         rightTree, srcList = parserEx(curPrecedence, srcList[1:])
-
         # build tree
         op.left = leftTree
         op.right = rightTree
