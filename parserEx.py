@@ -1,7 +1,7 @@
 class TreeNode:
-    def __init__(self, srcToken):
-        self.value = srcToken[0]
-        self.token = srcToken[1]
+    def __init__(self, srcleftTree):
+        self.value = srcleftTree[0]
+        self.token = srcleftTree[1]
         self.left = None
         self.right = None
 
@@ -16,64 +16,50 @@ def getPrecedence(op):
 
 
 def parserEx(precedence, srcList):
-    # Safety check
     if not srcList:
         return None, srcList
 
-    # --- HANDLE FIRST ELEMENT (NUMBER / LPAREN / UNARY MINUS) ---
+    leftTree = srcList[0]
 
-    token = srcList[0]
+    if leftTree[1] == "LPAREN":
+        leftTree, srcList = parserEx(0, srcList[1:])
 
-    # Case 1: Parentheses
-    if token[1] == "LPAREN":
-        leftTree, srcList = parserEx(0, srcList[1:])  # parse inside ()
-
-        # consume RPAREN if present
         if srcList and srcList[0][1] == "RPAREN":
             srcList = srcList[1:]
 
-    # Case 2: Unary minus
-    elif token[1] == "MINUS":
-        # parse right side with high precedence
+    elif leftTree[1] == "MINUS":
         rightTree, srcList = parserEx(2, srcList[1:])
 
-        zeroNode = TreeNode(["0", "NUMBER"])
-        opNode = TreeNode(["-", "MINUS"])
+        minusZero = TreeNode(["0", "NUMBER"])
+        op = TreeNode(["-", "MINUS"])
 
-        opNode.left = zeroNode
-        opNode.right = rightTree
+        op.left = minusZero
+        op.right = rightTree
 
-        leftTree = opNode
+        leftTree = op
 
-    # Case 3: Number
     else:
-        leftTree = TreeNode(token)
+        leftTree = TreeNode(leftTree)
         srcList = srcList[1:]
 
-    # --- HANDLE BINARY OPERATIONS ---
-
     while srcList:
-        # stop at closing parenthesis
         if srcList[0][1] == "RPAREN":
             break
 
         curToken = srcList[0]
         curPrecedence = getPrecedence(curToken[1])
 
-        # stop if lower or equal precedence
         if curPrecedence <= precedence:
             break
 
-        # consume operator
-        opNode = TreeNode(curToken)
+        op = TreeNode(curToken)
 
-        # parse right side
         rightTree, srcList = parserEx(curPrecedence, srcList[1:])
 
         # build tree
-        opNode.left = leftTree
-        opNode.right = rightTree
+        op.left = leftTree
+        op.right = rightTree
 
-        leftTree = opNode
+        leftTree = op
 
     return leftTree, srcList
