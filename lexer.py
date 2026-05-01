@@ -23,6 +23,7 @@ def tokenize(srcCode):
             srclist.append([srcCode[i], "PLUS"])
         elif srcCode[i] == "-":
             srclist.append([srcCode[i], "MINUS"])
+            
         elif srcCode[i] == "*":
             srclist.append([srcCode[i], "MULTIPLICATION"])
         elif srcCode[i] == "/":

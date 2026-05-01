@@ -16,50 +16,64 @@ def getPrecedence(op):
 
 
 def parserEx(precedence, srcList):
-    print(srcList)
+    # Safety check
     if not srcList:
-        return None
+        return None, srcList
 
-    #leftTree
-    token = srcList.pop(0)
+    # --- HANDLE FIRST ELEMENT (NUMBER / LPAREN / UNARY MINUS) ---
 
-    if token[1] == 'LPAREN':
-        left = parserEx(0, srcList)
+    token = srcList[0]
 
-        if srcList and srcList[0][1] == 'RPAREN':
-            srcList.pop(0)
-        else:
-            raise SyntaxError("Missing )")
+    # Case 1: Parentheses
+    if token[1] == "LPAREN":
+        leftTree, srcList = parserEx(0, srcList[1:])  # parse inside ()
 
-    elif token[1] == 'NUMBER':
-        left = TreeNode(token)
+        # consume RPAREN if present
+        if srcList and srcList[0][1] == "RPAREN":
+            srcList = srcList[1:]
 
+    # Case 2: Unary minus
+    elif token[1] == "MINUS":
+        # parse right side with high precedence
+        rightTree, srcList = parserEx(2, srcList[1:])
+
+        zeroNode = TreeNode(["0", "NUMBER"])
+        opNode = TreeNode(["-", "MINUS"])
+
+        opNode.left = zeroNode
+        opNode.right = rightTree
+
+        leftTree = opNode
+
+    # Case 3: Number
     else:
-        raise SyntaxError(f"Unexpected token: {token}")
+        leftTree = TreeNode(token)
+        srcList = srcList[1:]
 
-    # operators
+    # --- HANDLE BINARY OPERATIONS ---
+
     while srcList:
-        next_token = srcList[0]
-
-        if next_token[1] == 'RPAREN':
+        # stop at closing parenthesis
+        if srcList[0][1] == "RPAREN":
             break
 
- 
-        curPrecedence = getPrecedence(next_token[1])
+        curToken = srcList[0]
+        curPrecedence = getPrecedence(curToken[1])
 
+        # stop if lower or equal precedence
         if curPrecedence <= precedence:
             break
 
-        #Add perator
-        op_token = srcList.pop(0)
-        op_node = TreeNode(op_token)
+        # consume operator
+        opNode = TreeNode(curToken)
 
-        #RightTree
-        right = parserEx(curPrecedence, srcList)
+        # parse right side
+        rightTree, srcList = parserEx(curPrecedence, srcList[1:])
 
-        op_node.left = left
-        op_node.right = right
+        # build tree
+        opNode.left = leftTree
+        opNode.right = rightTree
 
-        left = op_node
+        leftTree = opNode
 
-    return left
+    return leftTree, srcList
