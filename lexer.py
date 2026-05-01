@@ -1,7 +1,7 @@
 # COMP 340 HW5
 # Ying Lu
 import re
-import parserEx
+import parseEx
 
 
 def tokenize(srcCode):

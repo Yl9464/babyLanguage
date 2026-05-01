@@ -1,6 +1,7 @@
+#Ying Lu
+#Comp340 - Parse HW
 import lexer
-import parserEx
-
+import parseEx
 
 def printTree(treeRoot):
     if treeRoot.token == "NUMBER":
@@ -28,6 +29,6 @@ testCases = [
 for case in testCases:
     srcCode = case
     tokSeq = lexer.tokenize(srcCode)
-    rootNode, _ = parserEx.parserEx(0, tokSeq)
+    rootNode, _ = parseEx.parseEx(0, tokSeq)
     printTree(rootNode)  # implementation of this function shown below
     print()

@@ -1,3 +1,5 @@
+# Ying Lu
+# Comp340 - Parse HW
 class TreeNode:
     def __init__(self, srcleftTree):
         self.value = srcleftTree[0]
@@ -15,17 +17,17 @@ def getPrecedence(op):
         return 0
 
 
-def parserEx(precedence, srcList):
+def parseEx(precedence, srcList):
     leftTree = srcList[0]
 
     if leftTree[1] == "LPAREN":
-        leftTree, srcList = parserEx(0, srcList[1:])
+        leftTree, srcList = parseEx(0, srcList[1:])
 
         if srcList and srcList[0][1] == "RPAREN":
             srcList = srcList[1:]
 
     elif leftTree[1] == "MINUS":
-        rightTree, srcList = parserEx(2, srcList[1:])
+        rightTree, srcList = parseEx(2, srcList[1:])
 
         # negative number
         negative = TreeNode(["0", "NUMBER"])
@@ -41,7 +43,7 @@ def parserEx(precedence, srcList):
         srcList = srcList[1:]
 
     while len(srcList) > 0:
-        if len(srcList) > 1: 
+        if len(srcList) > 1:
             if srcList[0][1] == "RPAREN":
                 break
 
@@ -51,7 +53,7 @@ def parserEx(precedence, srcList):
         if precedence >= curPrecedence:
             break
         op = TreeNode(left)
-        rightTree, srcList = parserEx(curPrecedence, srcList[1:])
+        rightTree, srcList = parseEx(curPrecedence, srcList[1:])
         # build tree
         op.left = leftTree
         op.right = rightTree
