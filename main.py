@@ -3,25 +3,19 @@
 import lexer
 import parseEx
 import evaluator
+import decipher
 
-
-def printTree(treeRoot):
-    if treeRoot.token == "NUMBER":
-        print(treeRoot.value, end="")
-    else:
-        print("(", end="")
-        printTree(treeRoot.left)
-        print(treeRoot.value, end="")
-        printTree(treeRoot.right)
-        print(")", end="")
-
+print("\nHello baby language.\nEnter baby exp and see what you get.")
 
 while True:
-    srcCode = input(">>> ")
-    if srcCode == "poopoo":
+    babyExp = input(">>> ")
+    if babyExp == "poopoo":
         break
-    tokSeq = lexer.tokenize(srcCode)
-    rootNode, _ = parseEx.parseEx(0, tokSeq)
+    srcCode = decipher.decipher(babyExp)
+    print("Interpreted as: ", srcCode)
+    srcList = lexer.tokenize(srcCode)
+    rootNode, _ = parseEx.parseEx(0, srcList)
     result = evaluator.evaluate(rootNode)
+    
     print("The result is: ", result)
 print("Now it is time to go poo poo.")
