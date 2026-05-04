@@ -1,5 +1,4 @@
-# Ying Lu
-# Comp340 - Parse HW
+
 class TreeNode:
     def __init__(self, srcleftTree):
         self.value = srcleftTree[0]
