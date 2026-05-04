@@ -1,5 +1,5 @@
 # Ying Lu
-# Comp340 - Parse HW
+# Comp340 - Evaluator HW
 import lexer
 import parseEx
 import evaluator

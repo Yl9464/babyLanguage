@@ -12,5 +12,5 @@ def evaluate(TreeRoot):
         return leftVal - rightVal
     elif TreeRoot.token == "MULTIPLICATION":
         return leftVal * rightVal
-    elif TreeRoot.token == "DIVIDE":
+    elif TreeRoot.token == "DIVISION":
         return leftVal / rightVal
