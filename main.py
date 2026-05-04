@@ -1,7 +1,9 @@
-#Ying Lu
-#Comp340 - Parse HW
+# Ying Lu
+# Comp340 - Evaluator HW
 import lexer
 import parseEx
+import evaluator
+
 
 def printTree(treeRoot):
     if treeRoot.token == "NUMBER":
@@ -14,21 +16,12 @@ def printTree(treeRoot):
         print(")", end="")
 
 
-testCases = [
-    "1*(2+5)",
-     "(1+2)*5+4",
-    "23 * ((1+5) * 33)",
-    "24",
-    "125",
-    "-5",
-    "--5",
-    "(-5)",
-    "1+2*5+15"
-]
-
-for case in testCases:
-    srcCode = case
+while True:
+    srcCode = input(">>> ")
+    if srcCode == "poopoo":
+        break
     tokSeq = lexer.tokenize(srcCode)
     rootNode, _ = parseEx.parseEx(0, tokSeq)
-    printTree(rootNode)  # implementation of this function shown below
-    print()
+    result = evaluator.evaluate(rootNode)
+    print("The result is: ", result)
+print("Now it is time to go poo poo.")
