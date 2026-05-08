@@ -1,37 +1,33 @@
 # COMP 340 HW5
 # Ying Lu
 import re
-import parseEx
+symbols = {
+    "+": "PLUS",
+    "-": "MINUS",
+    "*": "MULTIPLICATION",
+    "/": "DIVISION",
+    "(": "LPAREN",
+    ")": "RPAREN"
+}
 
 
 def tokenize(srcCode):
+    #print("lexer srcCode: ", srcCode)
+    
+    tokens = list(srcCode)
     srclist = []
-    i = 0
-    while i < len(srcCode):
-        if srcCode[i].isspace():
-            i += 1
-            continue
 
-        if srcCode[i].isdigit():
-            num = ""
-            while i < len(srcCode) and srcCode[i].isdigit():
-                num += srcCode[i]
-                i += 1
-            srclist.append([num, "NUMBER"])
+    for i in range(len(tokens)):
+        try:
+            if tokens[i].isdigit():
+                while i+1 < len(srcCode) and tokens[i+1].isdigit():
+                    tokens[i] = tokens[i] + tokens.pop(i+1)
+                srclist.append((tokens[i], "NUMBER"))
+            else:
+                token = symbols.get(tokens[i])
+                if not token:
+                    continue
+                token = symbols.get(tokens[i])
+        except IndexError:
             continue
-        elif srcCode[i] == "+":
-            srclist.append([srcCode[i], "PLUS"])
-        elif srcCode[i] == "-":
-            srclist.append([srcCode[i], "MINUS"])
-            
-        elif srcCode[i] == "*":
-            srclist.append([srcCode[i], "MULTIPLICATION"])
-        elif srcCode[i] == "/":
-            srclist.append([srcCode[i], "DIVISION"])
-        elif srcCode[i] == "(":
-            srclist.append([srcCode[i], "LPAREN"])
-        elif srcCode[i] == ")":
-            srclist.append([srcCode[i], "RPAREN"])
-        i+=1
     return srclist
-   

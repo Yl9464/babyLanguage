@@ -40,8 +40,6 @@ def lexer(string):
     return list_of_values
 
 # the function has no error cheking.
-
-
 # a second way of doing the lexer.
 # symbols = {
 #     "+" : "plus",

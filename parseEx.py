@@ -1,61 +1,61 @@
 
 class TreeNode:
-    def __init__(self, srcleftTree):
-        self.value = srcleftTree[0]
-        self.token = srcleftTree[1]
+    def __init__(self, treeData):
+        self.value = treeData[0]
+        self.token = treeData[1]
         self.left = None
         self.right = None
 
 
-def getPrecedence(op):
-    if op in ["PLUS", "MINUS"]:
-        return 1
-    elif op in ["MULTIPLICATION", "DIVISION"]:
-        return 2
-    else:
-        return 0
+precDict = {
+    "PLUS": 1,
+    "MINUS": 1,
+    "MULTIPLICATION": 2,
+    "DIVISION": 2
+}
 
-
-def parseEx(precedence, srcList):
-    leftTree = srcList[0]
-
-    if leftTree[1] == "LPAREN":
-        leftTree, srcList = parseEx(0, srcList[1:])
-
-        if srcList and srcList[0][1] == "RPAREN":
-            srcList = srcList[1:]
-
-    elif leftTree[1] == "MINUS":
-        rightTree, srcList = parseEx(2, srcList[1:])
-
-        # negative number
-        negative = TreeNode(["0", "NUMBER"])
-        op = TreeNode(["-", "MINUS"])
-
-        op.left = negative
-        op.right = rightTree
-
-        leftTree = op
-
-    else:
-        leftTree = TreeNode(leftTree)
-        srcList = srcList[1:]
-
-    while len(srcList) > 0:
-        if len(srcList) > 1:
-            if srcList[0][1] == "RPAREN":
-                break
-
-        left = srcList[0]
-        curPrecedence = getPrecedence(left[1])
-
-        if precedence >= curPrecedence:
-            break
-        op = TreeNode(left)
-        rightTree, srcList = parseEx(curPrecedence, srcList[1:])
-        # build tree
-        op.left = leftTree
-        op.right = rightTree
-        leftTree = op
-
-    return leftTree, srcList
+def parseEx(srcList,precedence=0):
+    print("parseEx srcList: ", srcList)
+    print()
+    # if len(srcList) == 0:
+    #     return "Input Error"
+    # item1 = srcList.pop(0)
+    
+    # if item1[1] == "MINUS":
+    #     right = parseEx(srcList, 3)
+    #     zero = TreeNode("0", "NUMBER")
+    #     negative = TreeNode("-", "MINUS")
+        
+    #     zero = TreeNode("0", "NUMBER")
+    #     negative.right = right
+    #     leftTree = negative
+        
+    # elif item1[0] == "LPAREN":
+    #     leftTree = parseEx(srcList, 0)
+        
+    #     if srcList[0][0] != "RPAREN":
+    #         print("Missing closing parentheses")
+    #     srcList.pop(0) #right paren 
+    # else:
+    #     leftTree = TreeNode(item1)
+    
+    # while len(srcList) > 0:
+    #     if srcList[0][0] not in ("PLUS", "MINUS", "MULTIPLICATION", "DIVISION"):
+    #         break
+        
+    #     op = srcList[0]
+    #     curPrecedence = precDict[op[1]] #likely error
+        
+    #     if curPrecedence <= precedence:
+    #         break
+        
+    #     srcList.pop(0)
+    #     operation = TreeNode(op)
+    #     right = parseEx(srcList, curPrecedence)
+        
+    #     operation.left = leftTree
+    #     operation.right = right
+        
+    #     leftTree = operation
+        
+    # return leftTree
