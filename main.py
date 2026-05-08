@@ -9,14 +9,13 @@ import decipher
 
 
 #babyExp = "baaaaamilkmamababaagahbaaaaadada" 
-babyExp= "baaaaa gahba baaa heh baa bapeebaa ba milk baaaaaa"
-#Interpreted as: 5-13/21+21*6
-#The result is: 130.38095238095238
-input = " ".join(babyExp.split())
+#babyExp= "baaaaa gahba baaa heh baa bapeebaa ba milk baaaaaa"
+babyExp = "baaaaa milk mamababaa gah baaaaa dada"
+
 # if babyExp == "poopoo":
 #     break
 
-srcCode = decipher.decipher(input)
+srcCode = decipher.decipher(babyExp)
 
 print("Interpreted as: ", srcCode) #11+5
 

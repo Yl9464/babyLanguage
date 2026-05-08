@@ -22,13 +22,15 @@ dict = {
     'baaaaaaaaa': '9'
 }
 
+# tokens = '|'.join(sorted(dict.keys(), key=len, reverse=True))
 tokens = sorted(dict.keys(), key=len, reverse=True)
-print("decipher tokens: ", tokens)
 
 
 def decipher(babyExp):
     i = 0
     result = []
+    # words = re.findall(tokens, babyExp)
+    # filter = [w for w in words if w != ' ']
 
     while i < len(babyExp):
         matched = False
@@ -40,4 +42,6 @@ def decipher(babyExp):
                 break
         if not matched:
             return ("no match found")
+    result = [i for i in result if i != ' ']
+    
     return "".join(result)
