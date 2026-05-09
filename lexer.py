@@ -1,37 +1,31 @@
 # COMP 340 HW5
 # Ying Lu
 import re
-import parseEx
-
-
 def tokenize(srcCode):
+    
     srclist = []
-    i = 0
-    while i < len(srcCode):
-        if srcCode[i].isspace():
-            i += 1
-            continue
-
-        if srcCode[i].isdigit():
-            num = ""
-            while i < len(srcCode) and srcCode[i].isdigit():
-                num += srcCode[i]
-                i += 1
-            srclist.append([num, "NUMBER"])
-            continue
+    for i in range(len(srcCode)):
+        value_type = None
+        if re.search(r"[0-9]", srcCode[i]):
+            if i > 0 and (re.search(r"[0-9]", srcCode[i-1])):
+                prev_value, prev_type = srclist[-1]
+                srclist[-1] = (prev_value + srcCode[i], prev_type)
+                continue
+            else:
+                value_type = "NUMBER"
         elif srcCode[i] == "+":
-            srclist.append([srcCode[i], "PLUS"])
+            value_type = "PLUS"
         elif srcCode[i] == "-":
-            srclist.append([srcCode[i], "MINUS"])
-            
+            value_type = "MINUS"
         elif srcCode[i] == "*":
-            srclist.append([srcCode[i], "MULTIPLICATION"])
+            value_type = "MULTIPLICATION"
         elif srcCode[i] == "/":
-            srclist.append([srcCode[i], "DIVISION"])
+            value_type = "DIVISION"
         elif srcCode[i] == "(":
-            srclist.append([srcCode[i], "LPAREN"])
+            value_type = "LPAREN"
         elif srcCode[i] == ")":
-            srclist.append([srcCode[i], "RPAREN"])
-        i+=1
+            value_type = "RPAREN"
+        if value_type:
+            srclist.append([srcCode[i], value_type])
+    
     return srclist
-   

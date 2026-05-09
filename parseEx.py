@@ -1,4 +1,3 @@
-
 class TreeNode:
     def __init__(self, srcleftTree):
         self.value = srcleftTree[0]
@@ -6,56 +5,49 @@ class TreeNode:
         self.left = None
         self.right = None
 
+precDict = {
+    "+": 1,
+    "-": 1,
+    "*": 2,
+    "/": 2
+}
 
-def getPrecedence(op):
-    if op in ["PLUS", "MINUS"]:
-        return 1
-    elif op in ["MULTIPLICATION", "DIVISION"]:
-        return 2
+def parseEx(srcList, precedence=0):
+    item1 = srcList.pop(0)
+    
+    if item1[0] == "-":
+        right = parseEx(srcList,3)
+        
+        zero = TreeNode(("0", "NUMBER"))
+        op_minus = TreeNode(("-", "MINUS"))
+        op_minus.left = zero
+        op_minus.right = right
+        left_tree = op_minus
+    
+    elif item1[0] == "(":
+        left_tree = parseEx(srcList, 0)
+        srcList.pop(0)  
+    
     else:
-        return 0
-
-
-def parseEx(precedence, srcList):
-    leftTree = srcList[0]
-
-    if leftTree[1] == "LPAREN":
-        leftTree, srcList = parseEx(0, srcList[1:])
-
-        if srcList and srcList[0][1] == "RPAREN":
-            srcList = srcList[1:]
-
-    elif leftTree[1] == "MINUS":
-        rightTree, srcList = parseEx(2, srcList[1:])
-
-        # negative number
-        negative = TreeNode(["0", "NUMBER"])
-        op = TreeNode(["-", "MINUS"])
-
-        op.left = negative
-        op.right = rightTree
-
-        leftTree = op
-
-    else:
-        leftTree = TreeNode(leftTree)
-        srcList = srcList[1:]
-
+        left_tree = TreeNode(item1) 
+         
     while len(srcList) > 0:
-        if len(srcList) > 1:
-            if srcList[0][1] == "RPAREN":
-                break
-
-        left = srcList[0]
-        curPrecedence = getPrecedence(left[1])
-
-        if precedence >= curPrecedence:
+        if srcList[0][0] not in precDict:
             break
-        op = TreeNode(left)
-        rightTree, srcList = parseEx(curPrecedence, srcList[1:])
-        # build tree
-        op.left = leftTree
-        op.right = rightTree
-        leftTree = op
+        op = srcList[0]
+       
+        curPrec = precDict[op[0]] #1
+        if curPrec <= precedence:
+            break
+    
+        srcList.pop(0)
+        opNode = TreeNode(op)
+        
+        right = parseEx(srcList, curPrec) 
+       
+        opNode.left = left_tree 
+        opNode.right = right 
+        left_tree = opNode
 
-    return leftTree, srcList
+    return left_tree
+
