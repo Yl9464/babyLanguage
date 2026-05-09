@@ -4,12 +4,15 @@ import parseEx
 import evaluator
 import decipher
 
-
-srcCode = decipher.decipher("mama mama baaaaaba gah baaaa dada milk baaa dada")
+#tests:
+#   gahbaaaba
+#   mama mama baaaaaba gah baaaa dada milk baaa dada
+#   baaaaa gah ba baaa heh baa bapeebaa ba milk baaaaaa
+#   mama mama baaaaaba gah baaaa dada milk baaa dada
+srcCode = decipher.decipher("baaaaa gah ba baaa heh baa bapeebaa ba milk baaaaaa")
 
 print("Interpreted as: ", srcCode)
 
 tokeSeq = lexer.tokenize(srcCode)
-print("tokeSeq parser: ", tokeSeq)
 rootNode = parseEx.parseEx(tokeSeq)
-# print("From parser: ", rootNode)
+
