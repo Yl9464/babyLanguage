@@ -4,9 +4,19 @@ import parseEx
 import evaluator
 import decipher
 
-# print("\nHello baby language.\nEnter baby exp and see what you get.")
-
+def printTree(treeRoot):
+    if treeRoot.token == "NUMB":
+        print(treeRoot.value,end="")
+    else:
+        print("(",end="")
+        printTree(treeRoot.left)
+        print(treeRoot.value,end="")
+        printTree(treeRoot.right)
+        print(")",end="")
+        
 srcCode = decipher.decipher( "mama mama baaaaaba gah baaaa dada milk baaa dada")
 print("Interpreted as: ", srcCode)
 tokeSeq = lexer.tokenize(srcCode)
-print("From lexer: ", tokeSeq)
+
+rootNode = parseEx.parseEx(tokeSeq)
+print("From parser: ", printTree(rootNode))
