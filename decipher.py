@@ -6,7 +6,6 @@ dict = {
     'heh': '/',
     'mama': '(',
     'dada': ')',
-    ' ': ' ',
     'b': '0',  
     'ba': '1',
     'baa': '2',
@@ -26,6 +25,10 @@ def decipher(babyExp):
     result = []
 
     while i < len(babyExp):
+        if babyExp[i].isspace():
+            i += 1
+            continue
+        
         matched = False
         for tok in tokens:
             if babyExp.startswith(tok, i):
