@@ -12,13 +12,11 @@ precDict = {
     "/": 2
 }
 
-
 def parseEx(srcList, precedence=0):
     item1 = srcList.pop(0)
     
     if item1[0] == "-":
         right = parseEx(srcList,3)
-        print("right returned: ", right)
         
         zero = TreeNode(("0", "NUMBER"))
         op_minus = TreeNode(("-", "MINUS"))
@@ -50,17 +48,6 @@ def parseEx(srcList, precedence=0):
         opNode.left = left_tree 
         opNode.right = right 
         left_tree = opNode
-     
-    #printTree(left_tree)
+
     return left_tree
 
-# def printTree(treeRoot):
-#     if treeRoot.token == "NUMBER":
-#         print(treeRoot.value,end="")
-#     else:
-#         print("(",end="")
-#         printTree(treeRoot.left)
-#         print(treeRoot.value,end="")
-#         printTree(treeRoot.right)
-#         print(")",end="")    
-        

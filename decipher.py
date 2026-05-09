@@ -7,7 +7,7 @@ dict = {
     'mama': '(',
     'dada': ')',
     ' ': ' ',
-    'b': '0',  # number of a's = num value
+    'b': '0',  
     'ba': '1',
     'baa': '2',
     'baaa': '3',
@@ -20,7 +20,6 @@ dict = {
 }
 
 tokens = sorted(dict.keys(), key=len, reverse=True)
-
 
 def decipher(babyExp):
     i = 0
