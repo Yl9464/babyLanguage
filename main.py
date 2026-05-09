@@ -15,4 +15,8 @@ print("Interpreted as: ", srcCode)
 
 tokeSeq = lexer.tokenize(srcCode)
 rootNode = parseEx.parseEx(tokeSeq)
+result = evaluator.evaluate(rootNode)
+print("The result is: ", result)
+
+
 

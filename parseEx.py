@@ -51,16 +51,16 @@ def parseEx(srcList, precedence=0):
         opNode.right = right 
         left_tree = opNode
      
-    printTree(left_tree)
+    #printTree(left_tree)
     return left_tree
 
-def printTree(treeRoot):
-    if treeRoot.token == "NUMBER":
-        print(treeRoot.value,end="")
-    else:
-        print("(",end="")
-        printTree(treeRoot.left)
-        print(treeRoot.value,end="")
-        printTree(treeRoot.right)
-        print(")",end="")    
+# def printTree(treeRoot):
+#     if treeRoot.token == "NUMBER":
+#         print(treeRoot.value,end="")
+#     else:
+#         print("(",end="")
+#         printTree(treeRoot.left)
+#         print(treeRoot.value,end="")
+#         printTree(treeRoot.right)
+#         print(")",end="")    
         

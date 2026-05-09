@@ -1,7 +1,4 @@
 def evaluate(TreeRoot):
-    
-    if TreeRoot is None:
-        return 0 
     if TreeRoot.token == "NUMBER":
         return int(TreeRoot.value)
     else:
