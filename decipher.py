@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# Ying Lu
-# Comp340 - Decipher HW
 import re
 dict = {
     'pee': '+',
@@ -22,15 +19,12 @@ dict = {
     'baaaaaaaaa': '9'
 }
 
-# tokens = '|'.join(sorted(dict.keys(), key=len, reverse=True))
 tokens = sorted(dict.keys(), key=len, reverse=True)
 
 
 def decipher(babyExp):
     i = 0
     result = []
-    # words = re.findall(tokens, babyExp)
-    # filter = [w for w in words if w != ' ']
 
     while i < len(babyExp):
         matched = False
@@ -41,7 +35,6 @@ def decipher(babyExp):
                 matched = True
                 break
         if not matched:
-            return ("no match found")
+            return ("no match")
     result = [i for i in result if i != ' ']
-    
     return "".join(result)

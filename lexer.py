@@ -1,33 +1,28 @@
 # COMP 340 HW5
 # Ying Lu
 import re
-symbols = {
-    "+": "PLUS",
-    "-": "MINUS",
-    "*": "MULTIPLICATION",
-    "/": "DIVISION",
-    "(": "LPAREN",
-    ")": "RPAREN"
-}
-
-
 def tokenize(srcCode):
-    #print("lexer srcCode: ", srcCode)
-    
-    tokens = list(srcCode)
     srclist = []
-
-    for i in range(len(tokens)):
-        try:
-            if tokens[i].isdigit():
-                while i+1 < len(srcCode) and tokens[i+1].isdigit():
-                    tokens[i] = tokens[i] + tokens.pop(i+1)
-                srclist.append((tokens[i], "NUMBER"))
+    for i in range(len(srcCode)):
+        value_type = None
+        if re.search(r"[0-9]", srcCode[i]):
+            if i > 0 and (re.search(r"[0-9]", srcCode[i-1])):
+                srclist[-1][1] += srcCode[i]
+                continue
             else:
-                token = symbols.get(tokens[i])
-                if not token:
-                    continue
-                token = symbols.get(tokens[i])
-        except IndexError:
-            continue
+                value_type = "NUMBER"
+        elif srcCode[i] == "+":
+            value_type = "PLUS "
+        elif srcCode[i] == "-":
+            value_type = "MINUS"
+        elif srcCode[i] == "*":
+            value_type = "MULTIPLICATION"
+        elif srcCode[i] == "/":
+            value_type = "DIVISION"
+        elif srcCode[i] == "(":
+            value_type = "LPAREN"
+        elif srcCode[i] == ")":
+            value_type = "RPAREN"
+        if value_type:
+            srclist.append([srcCode[i], value_type])
     return srclist
